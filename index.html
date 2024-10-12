@@ -1,0 +1,64 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>猜数字游戏</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            text-align: center;  
+            margin-top: 50px;  
+        }  
+        #message {  
+            font-size: 1.5em;  
+            margin-top: 20px;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <h1>猜数字游戏</h1>  
+    <p>我已经选择了一个1到100之间的数字。</p>  
+    <p id="attempts">你有6次机会来猜中它。</p>  
+    <input type="text" id="guess" placeholder="请输入你的猜测">  
+    <button onclick="guessNumber()">猜测</button>  
+    <p id="message"></p>  
+  
+    <script>  
+      let targetNumber = Math.floor(Math.random() * 100) + 1;  
+      let attemptsLeft = 6;  
+      let messageElement = document.getElementById('message');  
+      let attemptsElement = document.getElementById('attempts');  
+    
+      function guessNumber() {  
+          const guessInput = document.getElementById('guess');  
+          const guess = parseInt(guessInput.value, 10);  
+    
+          if (isNaN(guess)) {  
+              messageElement.textContent = '请输入一个有效的数字！';  
+              return;  
+          }  
+    
+          if (guess < targetNumber) {  
+              messageElement.textContent = '小了！';  
+          } else if (guess > targetNumber) {  
+              messageElement.textContent = '大了！';  
+          } else {  
+              messageElement.textContent = `恭喜你，猜中了！数字是 ${targetNumber}。`;  
+              guessInput.disabled = true;  
+              return;  
+          }  
+    
+          attemptsLeft--;  
+          attemptsElement.textContent = `你还有 ${attemptsLeft} 次机会来猜中它。`;  
+    
+          if (attemptsLeft === 0) {  
+              messageElement.textContent = `很遗憾，你用完了所有的机会。数字是 ${targetNumber}。`;  
+              guessInput.disabled = true;  
+          }  
+    
+          guessInput.value = ''; // 清空输入框  
+      }  
+  </script>  
+</body>  
+</html>
